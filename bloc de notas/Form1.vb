@@ -5,44 +5,34 @@ Public Class frmBlocNotas
     Private rutaActual As String = String.Empty
     Private documentoModificado As Boolean = False
 
-    ' Actualiza la información mostrada en la barra de estado
     Private Sub ActualizarBarraEstado()
         Try
-            ' Caracteres
+
             stsCaracteres.Text = String.Format("Caracteres: {0}", rtbDocumento.TextLength)
 
-            ' Posición (línea y columna)
             Dim linea As Integer = rtbDocumento.GetLineFromCharIndex(rtbDocumento.SelectionStart) + 1
             Dim columna As Integer = rtbDocumento.SelectionStart - rtbDocumento.GetFirstCharIndexOfCurrentLine() + 1
             stsPosicion.Text = String.Format("Ln {0}, Col {1}", linea, columna)
 
-            ' Fecha y hora (actual)
             stsFechaHora.Text = DateTime.Now.ToString("g")
 
-            ' Estado genérico
             If documentoModificado Then
                 stsEstado.Text = "Modificado"
             Else
                 stsEstado.Text = "Listo"
             End If
         Catch ex As Exception
-            ' Evitar romper la aplicación si la barra de estado aún no está inicializada
         End Try
     End Sub
 
     Private Sub frmBlocNotas_Load(sender As Object, e As EventArgs) Handles MyBase.Load
-        ' Configuración inicial del RichTextBox
         rtbDocumento.Font = New Font("Consolas", 11)
         rtbDocumento.WordWrap = True
-        ' mnuAjusteLinea no existe en el diseñador actual; evitar acceso directo
 
-        ' Llenar combos del ToolStrip
         tscbFuente.Items.AddRange(New String() {"Segoe UI", "Consolas", "Arial", "Times New Roman"})
         tscbFuente.SelectedIndex = 1
         tscbTamaño.Items.AddRange(New String() {"8", "10", "11", "12", "14", "18", "24"})
         tscbTamaño.SelectedIndex = 2
-
-        ' Añadir entrada dinámica "Acerca de..." al menú Ayuda si existe
 
         ActualizarBarraEstado()
         Me.Text = "Bloc de Notas VB.NET - [Nuevo documento]"
@@ -57,11 +47,8 @@ Public Class frmBlocNotas
         ActualizarBarraEstado()
     End Sub
 
-    ' Operaciones básicas: Nuevo, Abrir y Guardar
-
     Private Sub NuevoDocumento()
         If documentoModificado Then
-            ' Si hay cambios, simplemente reiniciamos (el diálogo de guardado puede añadirse después)
         End If
 
         rutaActual = String.Empty
@@ -112,29 +99,6 @@ Public Class frmBlocNotas
             MessageBox.Show("Error al guardar el archivo: " & ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error)
         End Try
     End Sub
-    Private Sub mnuNuevo_Click(sender As Object, e As EventArgs)
-        NuevoDocumento()
-    End Sub
-
-    Private Sub mnuAbrir_Click(sender As Object, e As EventArgs)
-        AbrirDocumento()
-    End Sub
-
-    Private Sub mnuGuardar_Click(sender As Object, e As EventArgs)
-        GuardarDocumento(False)
-    End Sub
-
-    Private Sub mnuGuardarComo_Click(sender As Object, e As EventArgs)
-        GuardarDocumento(True)
-    End Sub
-
-    Private Sub mnuSalir_Click(sender As Object, e As EventArgs)
-        Me.Close()
-    End Sub
-
-
-    ' Deshacer / Rehacer: los elementos de menú no estaban presentes en el diseñador,
-    ' por lo que estos manejadores se omiten para evitar errores de compilación.
 
     Private Sub mnuCortar_Click(sender As Object, e As EventArgs)
         rtbDocumento.Cut()
@@ -163,25 +127,15 @@ Public Class frmBlocNotas
     Private Sub mnuPegar_Click(sender As Object, e As EventArgs)
         rtbDocumento.Paste()
     End Sub
-
     Private Sub mnuSeleccionarTodo_Click(sender As Object, e As EventArgs) Handles SeleccionatTodoToolStripMenuItem.Click
         rtbDocumento.SelectAll()
     End Sub
 
     Private Sub mnuFuente_Click(sender As Object, e As EventArgs) Handles FuentesToolStripMenuItem.Click
-        ' Usar el diálogo de fuentes definido en el diseñador (digFuente)
         digFuente.Font = rtbDocumento.SelectionFont
         If digFuente.ShowDialog() = DialogResult.OK Then
             rtbDocumento.SelectionFont = digFuente.Font
         End If
-    End Sub
-
-    ' El elemento de menú para cambiar el color de texto no existe en el diseñador;
-    ' si se necesita, añadir el control correspondiente y asignar un manejador.
-
-    Private Sub mnuAjusteLinea_Click(sender As Object, e As EventArgs)
-        ' mnuAjusteLinea no existe en el diseñador actual; alternar ajuste de línea manualmente
-        rtbDocumento.WordWrap = Not rtbDocumento.WordWrap
     End Sub
 
     Private Sub mnuZoomMas_Click(sender As Object, e As EventArgs)
@@ -240,7 +194,6 @@ Public Class frmBlocNotas
         rtbDocumento.SelectionFont = New Font(rtbDocumento.SelectionFont.FontFamily, tam, rtbDocumento.SelectionFont.Style)
     End Sub
 
-    ' Combina o quita un estilo de fuente sobre el texto seleccionado
     Private Sub AplicarEstiloFuente(estilo As FontStyle)
         Dim fuenteActual As Font = rtbDocumento.SelectionFont
         If fuenteActual Is Nothing Then Exit Sub
@@ -253,9 +206,7 @@ Public Class frmBlocNotas
         rtbDocumento.SelectionFont = New Font(fuenteActual, nuevoEstilo)
     End Sub
 
-    ' Manejo del menú contextual (cmsTexto)
     Private Sub cmsTexto_Opening(sender As Object, e As System.ComponentModel.CancelEventArgs) Handles cmsTexto.Opening
-        ' Habilita/deshabilita opciones según haya texto seleccionado
         Dim haySeleccion As Boolean = rtbDocumento.SelectionLength > 0
         CortarToolStripMenuItem.Enabled = haySeleccion
         CopiarToolStripMenuItem.Enabled = haySeleccion
@@ -331,7 +282,7 @@ Public Class frmBlocNotas
         End If
     End Sub
 
-    Private Sub mnuColordetexto_Click(sender As Object, e As EventArgs) Handles mnuColordetexto.Click
+    Private Sub mnuColordetexto_Click(sender As Object, e As EventArgs)
         If rtbDocumento.SelectionLength > 0 Then
             If digColor.ShowDialog() = DialogResult.OK Then
                 rtbDocumento.SelectionColor = digColor.Color
@@ -377,4 +328,90 @@ Public Class frmBlocNotas
             MessageBoxIcon.Information)
 
     End Sub
+
+    Private Sub mnuCerra_Click(sender As Object, e As EventArgs) Handles mnuCerra.Click
+        Me.Close()
+
+
+    End Sub
+
+    Private Sub AjusteDToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles AjusteDToolStripMenuItem.Click
+        rtbDocumento.WordWrap = Not rtbDocumento.WordWrap
+        ActualizarBarraEstado()
+    End Sub
+
+    Private Sub ColorDeTextoToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ColorDeTextoToolStripMenuItem.Click
+        If digColor.ShowDialog() = DialogResult.OK Then
+            rtbDocumento.SelectionColor = digColor.Color
+        End If
+    End Sub
+
+    Private Sub mnuNuevo_Click(sender As Object, e As EventArgs) Handles mnuNuevo.Click
+        If documentoModificado AndAlso rtbDocumento.Text <> "" Then
+            Dim respuesta As DialogResult = MessageBox.Show(
+                "¿Desea crear un documento nuevo?",
+                "Bloc de Notas VB.NET",
+                MessageBoxButtons.YesNo,
+                MessageBoxIcon.Question)
+
+            If respuesta = DialogResult.Yes Then
+                NuevoDocumento()
+            End If
+        Else
+            NuevoDocumento()
+        End If
+    End Sub
+
+    Private Sub mnuAbrir_Click(sender As Object, e As EventArgs) Handles mnuAbrir.Click
+        AbrirDocumento()
+    End Sub
+
+    Private Sub mnuGuardar_Click(sender As Object, e As EventArgs) Handles mnuGuardar.Click
+        GuardarDocumento(False)
+    End Sub
+
+    Private Sub mnuGuardarComo_Click(sender As Object, e As EventArgs) Handles mnuGuardarComo.Click
+        GuardarDocumento(True)
+    End Sub
+
+    Private Sub mnuSalir_Click(sender As Object, e As EventArgs) Handles mnuSalir.Click
+        Me.Close()
+    End Sub
+
+    Private Sub Deshacer_Click(sender As Object, e As EventArgs) Handles Deshacer.Click
+        If rtbDocumento.CanUndo Then
+            rtbDocumento.Undo()
+            documentoModificado = True
+            ActualizarBarraEstado()
+        End If
+    End Sub
+
+    Private Sub Rehacer_Click(sender As Object, e As EventArgs) Handles Rehacer.Click
+        If rtbDocumento.CanRedo Then
+            rtbDocumento.Redo()
+            documentoModificado = True
+            ActualizarBarraEstado()
+        End If
+    End Sub
+
+    Private Sub mnuCortar_Click_1(sender As Object, e As EventArgs) Handles mnuCortar.Click
+        rtbDocumento.Cut()
+    End Sub
+
+    Private Sub mnuCopiar_Click_1(sender As Object, e As EventArgs) Handles mnuCopiar.Click
+        rtbDocumento.Copy()
+    End Sub
+
+    Private Sub mnuPegar_Click_1(sender As Object, e As EventArgs) Handles mnuPegar.Click
+        rtbDocumento.Paste()
+    End Sub
+
+    Private Sub mnuSeleccionarTodo_Click_1(sender As Object, e As EventArgs) Handles mnuSeleccionarTodo.Click
+        rtbDocumento.SelectAll()
+    End Sub
+
+    Private Sub ContarPalabrasToolStripMenuItem_Click(sender As Object, e As EventArgs) Handles ContarPalabrasToolStripMenuItem.Click
+        ContarPalabras()
+    End Sub
+
 End Class

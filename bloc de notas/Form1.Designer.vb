@@ -35,8 +35,23 @@ Partial Class frmBlocNotas
         tscbTamaño = New ToolStripComboBox()
         mnuPrincipal = New MenuStrip()
         ArchivoToolStripMenuItem = New ToolStripMenuItem()
+        mnuNuevo = New ToolStripMenuItem()
+        mnuAbrir = New ToolStripMenuItem()
+        mnuGuardar = New ToolStripMenuItem()
+        mnuGuardarComo = New ToolStripMenuItem()
+        mnuSalir = New ToolStripMenuItem()
+        mnuCerra = New ToolStripMenuItem()
         FormatoToolStripMenuItem = New ToolStripMenuItem()
+        mnuFuente = New ToolStripMenuItem()
+        AjusteDToolStripMenuItem = New ToolStripMenuItem()
+        ColorDeTextoToolStripMenuItem = New ToolStripMenuItem()
         EdicionToolStripMenuItem = New ToolStripMenuItem()
+        Deshacer = New ToolStripMenuItem()
+        Rehacer = New ToolStripMenuItem()
+        mnuCortar = New ToolStripMenuItem()
+        mnuCopiar = New ToolStripMenuItem()
+        mnuPegar = New ToolStripMenuItem()
+        mnuSeleccionarTodo = New ToolStripMenuItem()
         AyudaToolStripMenuItem = New ToolStripMenuItem()
         HerramientasToolStripMenuItem = New ToolStripMenuItem()
         BuscarToolStripMenuItem = New ToolStripMenuItem()
@@ -59,7 +74,6 @@ Partial Class frmBlocNotas
         digColor = New ColorDialog()
         tmrReloj = New Timer(components)
         rtbDocumento = New RichTextBox()
-        ColorDeTextoToolStripMenuItem = New ToolStripMenuItem()
         tsPrincipal.SuspendLayout()
         mnuPrincipal.SuspendLayout()
         cmsTexto.SuspendLayout()
@@ -83,7 +97,7 @@ Partial Class frmBlocNotas
         tsbNuevo.ImageTransparentColor = Color.Magenta
         tsbNuevo.Name = "tsbNuevo"
         tsbNuevo.Size = New Size(23, 22)
-        tsbNuevo.Text = "ToolStripButton1"
+        tsbNuevo.Text = "Nevo"
         ' 
         ' tsbAbrir
         ' 
@@ -92,7 +106,7 @@ Partial Class frmBlocNotas
         tsbAbrir.ImageTransparentColor = Color.Magenta
         tsbAbrir.Name = "tsbAbrir"
         tsbAbrir.Size = New Size(23, 22)
-        tsbAbrir.Text = "ToolStripButton2"
+        tsbAbrir.Text = "Abrir"
         ' 
         ' tsbGuardar
         ' 
@@ -101,7 +115,7 @@ Partial Class frmBlocNotas
         tsbGuardar.ImageTransparentColor = Color.Magenta
         tsbGuardar.Name = "tsbGuardar"
         tsbGuardar.Size = New Size(23, 22)
-        tsbGuardar.Text = "ToolStripButton3"
+        tsbGuardar.Text = "Guardar"
         ' 
         ' tsbNegrita
         ' 
@@ -111,7 +125,7 @@ Partial Class frmBlocNotas
         tsbNegrita.ImageTransparentColor = Color.Magenta
         tsbNegrita.Name = "tsbNegrita"
         tsbNegrita.Size = New Size(23, 22)
-        tsbNegrita.Text = "ToolStripButton4"
+        tsbNegrita.Text = "Negrita"
         ' 
         ' tsbCursiva
         ' 
@@ -121,7 +135,7 @@ Partial Class frmBlocNotas
         tsbCursiva.ImageTransparentColor = Color.Magenta
         tsbCursiva.Name = "tsbCursiva"
         tsbCursiva.Size = New Size(23, 22)
-        tsbCursiva.Text = "ToolStripButton5"
+        tsbCursiva.Text = "Cursiva"
         ' 
         ' tsbSubrayado
         ' 
@@ -131,7 +145,7 @@ Partial Class frmBlocNotas
         tsbSubrayado.ImageTransparentColor = Color.Magenta
         tsbSubrayado.Name = "tsbSubrayado"
         tsbSubrayado.Size = New Size(23, 22)
-        tsbSubrayado.Text = "ToolStripButton6"
+        tsbSubrayado.Text = "Subrayado"
         ' 
         ' tscbFuente
         ' 
@@ -156,22 +170,121 @@ Partial Class frmBlocNotas
         ' 
         ' ArchivoToolStripMenuItem
         ' 
+        ArchivoToolStripMenuItem.DropDownItems.AddRange(New ToolStripItem() {mnuNuevo, mnuAbrir, mnuGuardar, mnuGuardarComo, mnuSalir, mnuCerra})
         ArchivoToolStripMenuItem.Name = "ArchivoToolStripMenuItem"
         ArchivoToolStripMenuItem.Size = New Size(60, 20)
         ArchivoToolStripMenuItem.Text = "Archivo"
         ' 
+        ' mnuNuevo
+        ' 
+        mnuNuevo.Name = "mnuNuevo"
+        mnuNuevo.ShortcutKeys = Keys.Control Or Keys.N
+        mnuNuevo.Size = New Size(171, 22)
+        mnuNuevo.Text = "&Nuevo"
+        ' 
+        ' mnuAbrir
+        ' 
+        mnuAbrir.Name = "mnuAbrir"
+        mnuAbrir.ShortcutKeys = Keys.Control Or Keys.O
+        mnuAbrir.Size = New Size(171, 22)
+        mnuAbrir.Text = "&Abrir"
+        ' 
+        ' mnuGuardar
+        ' 
+        mnuGuardar.Name = "mnuGuardar"
+        mnuGuardar.ShortcutKeys = Keys.Control Or Keys.S
+        mnuGuardar.Size = New Size(171, 22)
+        mnuGuardar.Text = "&Guardar"
+        ' 
+        ' mnuGuardarComo
+        ' 
+        mnuGuardarComo.Name = "mnuGuardarComo"
+        mnuGuardarComo.Size = New Size(171, 22)
+        mnuGuardarComo.Text = "Guardar &Como"
+        ' 
+        ' mnuSalir
+        ' 
+        mnuSalir.Name = "mnuSalir"
+        mnuSalir.ShortcutKeys = Keys.Alt Or Keys.F4
+        mnuSalir.Size = New Size(171, 22)
+        mnuSalir.Text = "&Salir"
+        ' 
+        ' mnuCerra
+        ' 
+        mnuCerra.Name = "mnuCerra"
+        mnuCerra.Size = New Size(171, 22)
+        mnuCerra.Text = "Cerrar documento"
+        ' 
         ' FormatoToolStripMenuItem
         ' 
-        FormatoToolStripMenuItem.DropDownItems.AddRange(New ToolStripItem() {ColorDeTextoToolStripMenuItem})
+        FormatoToolStripMenuItem.DropDownItems.AddRange(New ToolStripItem() {mnuFuente, AjusteDToolStripMenuItem, ColorDeTextoToolStripMenuItem})
         FormatoToolStripMenuItem.Name = "FormatoToolStripMenuItem"
         FormatoToolStripMenuItem.Size = New Size(64, 20)
         FormatoToolStripMenuItem.Text = "Formato"
         ' 
+        ' mnuFuente
+        ' 
+        mnuFuente.Name = "mnuFuente"
+        mnuFuente.Size = New Size(151, 22)
+        mnuFuente.Text = "Fuente"
+        ' 
+        ' AjusteDToolStripMenuItem
+        ' 
+        AjusteDToolStripMenuItem.Name = "AjusteDToolStripMenuItem"
+        AjusteDToolStripMenuItem.Size = New Size(151, 22)
+        AjusteDToolStripMenuItem.Text = "Ajuste de linea"
+        ' 
+        ' ColorDeTextoToolStripMenuItem
+        ' 
+        ColorDeTextoToolStripMenuItem.Name = "ColorDeTextoToolStripMenuItem"
+        ColorDeTextoToolStripMenuItem.Size = New Size(151, 22)
+        ColorDeTextoToolStripMenuItem.Text = "Color de texto"
+        ' 
         ' EdicionToolStripMenuItem
         ' 
+        EdicionToolStripMenuItem.DropDownItems.AddRange(New ToolStripItem() {Deshacer, Rehacer, mnuCortar, mnuCopiar, mnuPegar, mnuSeleccionarTodo})
         EdicionToolStripMenuItem.Name = "EdicionToolStripMenuItem"
         EdicionToolStripMenuItem.Size = New Size(58, 20)
         EdicionToolStripMenuItem.Text = "Edicion"
+        ' 
+        ' Deshacer
+        ' 
+        Deshacer.Name = "Deshacer"
+        Deshacer.Size = New Size(164, 22)
+        Deshacer.Text = "Deshacer"
+        ' 
+        ' Rehacer
+        ' 
+        Rehacer.Name = "Rehacer"
+        Rehacer.Size = New Size(164, 22)
+        Rehacer.Text = "Rehacer"
+        ' 
+        ' mnuCortar
+        ' 
+        mnuCortar.Name = "mnuCortar"
+        mnuCortar.ShortcutKeys = Keys.Control Or Keys.X
+        mnuCortar.Size = New Size(164, 22)
+        mnuCortar.Text = "Cortar"
+        ' 
+        ' mnuCopiar
+        ' 
+        mnuCopiar.Name = "mnuCopiar"
+        mnuCopiar.ShortcutKeys = Keys.Control Or Keys.C
+        mnuCopiar.Size = New Size(164, 22)
+        mnuCopiar.Text = "Copiar"
+        ' 
+        ' mnuPegar
+        ' 
+        mnuPegar.Name = "mnuPegar"
+        mnuPegar.ShortcutKeys = Keys.Control Or Keys.V
+        mnuPegar.Size = New Size(164, 22)
+        mnuPegar.Text = "Pegar"
+        ' 
+        ' mnuSeleccionarTodo
+        ' 
+        mnuSeleccionarTodo.Name = "mnuSeleccionarTodo"
+        mnuSeleccionarTodo.Size = New Size(164, 22)
+        mnuSeleccionarTodo.Text = "Seleccionat Todo"
         ' 
         ' AyudaToolStripMenuItem
         ' 
@@ -311,12 +424,6 @@ Partial Class frmBlocNotas
         rtbDocumento.TabIndex = 5
         rtbDocumento.Text = ""
         ' 
-        ' ColorDeTextoToolStripMenuItem
-        ' 
-        ColorDeTextoToolStripMenuItem.Name = "ColorDeTextoToolStripMenuItem"
-        ColorDeTextoToolStripMenuItem.Size = New Size(180, 22)
-        ColorDeTextoToolStripMenuItem.Text = "Color de texto"
-        ' 
         ' frmBlocNotas
         ' 
         AutoScaleDimensions = New SizeF(7F, 15F)
@@ -378,6 +485,20 @@ Partial Class frmBlocNotas
     Friend WithEvents HerramientasToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents BuscarToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ContarPalabrasToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents mnuFuente As ToolStripMenuItem
+    Friend WithEvents mnuNuevo As ToolStripMenuItem
+    Friend WithEvents mnuAbrir As ToolStripMenuItem
+    Friend WithEvents mnuGuardar As ToolStripMenuItem
+    Friend WithEvents mnuGuardarComo As ToolStripMenuItem
+    Friend WithEvents mnuSalir As ToolStripMenuItem
+    Friend WithEvents AjusteDToolStripMenuItem As ToolStripMenuItem
     Friend WithEvents ColorDeTextoToolStripMenuItem As ToolStripMenuItem
+    Friend WithEvents Deshacer As ToolStripMenuItem
+    Friend WithEvents Rehacer As ToolStripMenuItem
+    Friend WithEvents mnuCortar As ToolStripMenuItem
+    Friend WithEvents mnuCopiar As ToolStripMenuItem
+    Friend WithEvents mnuPegar As ToolStripMenuItem
+    Friend WithEvents mnuSeleccionarTodo As ToolStripMenuItem
+    Friend WithEvents mnuCerra As ToolStripMenuItem
 
 End Class
